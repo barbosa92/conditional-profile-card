@@ -1,27 +1,5 @@
 import "../style/index.css";
 
-/**
- *  EDIT ONLY INSIDE THIS RENDER FUNCTION
- *  This function is called every time the user changes types or changes any input
- * 
-    {
-        includeCover: true, // if includeCover is true the algorithm should
-        background: "https://images.unsplash.com/photo-1511974035430-5de47d3b95da", // this is the url of the image that will used as background for the profile cover
-        avatarURL: "https://randomuser.me/api/portraits/women/42.jpg", // this is the url for the profile avatar
-        socialMediaPosition: "left", // social media bar position (left or right)
-        
-        twitter: null, // social media usernames
-        github: null,
-        linkedin: null,
-        instagram: null,
-
-        name: null,
-        lastname: null,
-        role: null,
-        country: null,
-        city: null
-    }
- */
 function render(variables = {}) {
   console.log("These are the current variables: ", variables); //print on the console
   // here we ask the logical questions to make decisions on how to build the html
@@ -39,15 +17,28 @@ function render(variables = {}) {
   if (variables.role == null) job = "<h2></h2>";
 
   // Comprueba que city y country se hayan completado
-  let place = `<h2>${variables.city}, ${variables.country}<h2/>`;
+  let place = `<h3>${variables.city}, ${variables.country}<h3/>`;
   if (variables.city == null || variables.country == null) place = "<h3></h3>";
 
+  //Comprueba en que luegar se desea mostrar las redes sociales
+  let socialBar = `${variables.socialMediaPosition}`;
+
   // Comprueba que se añadan RRSS, de lo contrario asigna la URL de 4GeeksAcademy
-  let twit = `https://twitter.com/${variables.twitter}`
-  if (variables.twitter == null) twit = "<li><a href="https://twitter.com/4GeeksAcademy"><i class="fa-brands fa-twitter"></i></a></li>"
-  let git = `https://twitter.com/${variables.github}`
-  let link = `https://twitter.com/${variables.linkedin}`
-  let inst = `https://twitter.com/${variables.instagram}`
+  let twit = `<li><a href="https://twitter.com/${variables.twitter}"><i class="fa-brands fa-twitter"></i></a></li>`;
+  if (variables.twitter == null)
+    twit = `<li><a href="https://twitter.com/4GeeksAcademyES"><i class="fa-brands fa-twitter"></i></a></li>`;
+
+  let git = `<li><a href="https://github.com/${variables.github}"><i class="fa-brands fa-github"></i></a></li>`;
+  if (variables.github == null)
+    git = `<li><a href="https://github.com/alesanchezr"><i class="fa-brands fa-github"></i></a></li>`;
+
+  let link = `<li><a href="https://www.linkedin.com/in/${variables.linkedin}"><i class="fa-brands fa-linkedin-in"></i></a></li>`;
+  if (variables.linkedin == null)
+    link = `<li><a href="https://linkedin.com/albert-einstein-659129207"><i class="fa-brands fa-linkedin-in"></i></a></li>`;
+
+  let inst = `<li><a href="https://instagram.com/${variables.instagram}"><i class="fa-brands fa-instagram"></i></a></li>`;
+  if (variables.instagram == null)
+    inst = `<li><a href="https://instagram.com/4geeksacademyes"><i class="fa-brands fa-instagram"></i></a></li>`;
 
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
@@ -56,11 +47,11 @@ function render(variables = {}) {
             ${fullname}
             ${job}
             ${place}
-          <ul class="position-right">
-            <li><a href="https://twitter.com/${variables.twitter}"><i class="fa-brands fa-twitter"></i></a></li>
-            <li><a href="https://github.com/${variables.github}"><i class="fa-brands fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/${variables.linkedin}"><i class="fa-brands fa-linkedin-in"></i></a></li>
-            <li><a href="https://instagram.com/${variables.instagram}"><i class="fa-brands fa-instagram"></i></a></li>
+          <ul class=${socialBar}>
+            ${twit}
+            ${git}
+            ${link}
+            ${inst}
           </ul>
         </div>
     `;
